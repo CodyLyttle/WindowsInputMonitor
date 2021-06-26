@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using WindowsInputMonitor.Win32;
+using WindowsInputMonitor.Win32API;
 
 namespace WindowsInputMonitor.Monitoring
 {

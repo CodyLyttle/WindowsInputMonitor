@@ -6,13 +6,13 @@ namespace WindowsInputMonitor.Monitoring
 {
     internal abstract class InputMonitor
     {
-        private readonly Win32.CallbackFunction _callback;
-        private readonly Win32.SafeHookHandle _hookHandle;
+        private readonly Win32API.CallbackFunction _callback;
+        private readonly Win32API.SafeHookHandle _hookHandle;
 
-        public InputMonitor(Win32.HookType hookType)
+        public InputMonitor(Win32API.HookType hookType)
         {
-            _callback = new Win32.CallbackFunction(HandleCallback);
-            _hookHandle = Win32.NativeMethods.SetWindowsHookEx((int)hookType, _callback, GetPointerToThisLibrary(), 0);
+            _callback = new Win32API.CallbackFunction(HandleCallback);
+            _hookHandle = Win32API.NativeMethods.SetWindowsHookEx((int)hookType, _callback, GetPointerToThisLibrary(), 0);
         }
         public void Dispose()
         {
@@ -28,7 +28,7 @@ namespace WindowsInputMonitor.Monitoring
             if(nCode >= 0)
                 ParseCallbackData(wParam, lParam);
 
-            return Win32.NativeMethods.CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
+            return Win32API.NativeMethods.CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
         }
         private static IntPtr GetPointerToThisLibrary()
             => Process.GetCurrentProcess().MainModule.BaseAddress;
